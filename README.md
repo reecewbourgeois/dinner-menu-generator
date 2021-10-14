@@ -1,4 +1,4 @@
-# Welcome to the Dinner Menu Generator!
+# Welcome to the Dinner Menu Generator! (Very much a work-in-progress)
 
 This is a one-page application written in TypeScript and ReactJS that  
 generates a weekly dinner menu based on the meals in a specified MongoDB database.
