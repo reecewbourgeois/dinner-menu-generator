@@ -1,11 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 node_modules
 
+#sensitive info
+server/config.ts
+
 # dependencies
 client/node_modules
 
 # production
 client/build
+compiled_server
 
 # misc
 .DS_Store
