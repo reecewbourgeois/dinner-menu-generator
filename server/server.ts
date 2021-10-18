@@ -15,6 +15,7 @@ app.use(express.json());
 //app.use("/api/test", require("./routes/test"));
 
 //Backend Routes
+app.use("/api/addMealToDatabase", require("./routes/addMealToDatabase"));
 
 //All are needed to prevent crashing on page refresh
 //app.set("views", path.join(__dirname, "views"));
