@@ -1,0 +1,13 @@
+.side-menu {
+  width: 15vw;
+  height: 100vh;
+  background-color: white;
+  border-radius: 5px 0px 5px 0px;
+}
+
+.add-button {
+  width: 15vw;
+  height: 5vh;
+  bottom: 0%;
+  position: fixed;
+}
