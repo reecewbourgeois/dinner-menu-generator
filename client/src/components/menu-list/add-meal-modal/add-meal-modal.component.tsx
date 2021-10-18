@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Axios from "axios";
+import { DateTime } from "luxon";
 
 type Inputs = {
   meal_name: string;
@@ -9,7 +10,7 @@ type Inputs = {
 
 type Meal = {
   meal_name: string;
-  last_serving: Date | null;
+  last_serving: string | null;
   season: "All" | "Cold" | "Hot";
 };
 
@@ -22,8 +23,16 @@ const AddMealModal: FC = () => {
     reset,
     formState: { errors },
   } = useForm<Inputs>();
-  const addMealToDatabase: SubmitHandler<Inputs> = ({ meal_name, season }) => {
+  const addMealToDatabase: SubmitHandler<Inputs> = async ({
+    meal_name,
+    season,
+  }) => {
+    /* Create a filler date */
+    const filler_date = DateTime.local(1900).startOf('day').toUTC().toString();
+    console.log(filler_date);
+
     /* Add meal to the "meals" collection with a last_serving of null */
+    //let response = await Axios.post("/api/addMealToDatabase", {});
 
     /* Reset all fields */
     reset();
