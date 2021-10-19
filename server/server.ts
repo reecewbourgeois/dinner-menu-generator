@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { MongoClient } from "mongodb";
-import mongodb_uri from "./config";
+import { mongodb_uri } from "./config";
 
 const app = express();
 

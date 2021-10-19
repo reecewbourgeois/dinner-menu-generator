@@ -1,12 +1,12 @@
-import "./App.css";
-import MenuList from "./components/menu-list/menu-list.component";
+import { FC } from "react";
 
-function App() {
+import "./App.css";
+import { MenuList } from "./components/menu-list/menu-list.component";
+
+export const App: FC = () => {
   return (
     <div className="App">
       <MenuList />
     </div>
   );
-}
-
-export default App;
+};

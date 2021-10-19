@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./menu-list.css";
-import AddMealModal from "./add-meal-modal/add-meal-modal.component";
+import { AddMealModal } from "./add-meal-modal/add-meal-modal.component";
 
 const button_text = " Add Meal";
 
-const MenuList: FC = () => {
+export const MenuList: FC = () => {
   return (
     <div className="side-menu">
       <button
@@ -23,5 +23,3 @@ const MenuList: FC = () => {
     </div>
   );
 };
-
-export default MenuList;

@@ -16,7 +16,7 @@ type Meal = {
 
 const regex_for_meals = /^[\w /&'-]+/g;
 
-const AddMealModal: FC = () => {
+export const AddMealModal: FC = () => {
   const {
     register,
     handleSubmit,
@@ -105,5 +105,3 @@ const AddMealModal: FC = () => {
     </div>
   );
 };
-
-export default AddMealModal;
