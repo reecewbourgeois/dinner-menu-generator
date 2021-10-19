@@ -5,7 +5,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./menu-list.css";
 import { AddMealModal } from "./add-meal-modal/add-meal-modal.component";
 
-const button_text = " Add Meal";
+const buttonText = " Add Meal";
 
 export const MenuList: FC = () => {
   return (
@@ -16,7 +16,7 @@ export const MenuList: FC = () => {
         data-bs-target="#addMealModal"
       >
         <FontAwesomeIcon icon={faPlus} />
-        {button_text}
+        {buttonText}
       </button>
 
       <AddMealModal />
