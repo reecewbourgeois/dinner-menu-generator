@@ -1,38 +1,60 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Axios from "axios";
 import { DateTime } from "luxon";
 
 type Inputs = {
-  meal_name: string;
-  season: "All" | "Cold" | "Hot";
-};
-
-type Meal = {
-  meal_name: string;
-  last_serving: string | null;
+  mealName: string;
   season: "All" | "Cold" | "Hot";
 };
 
 const regex_for_meals = /^[\w /&'-]+/g;
 
 export const AddMealModal: FC = () => {
+  /* useForm hook for all inputs in the modal */
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<Inputs>();
+
+  /* Success Message next to the "Add" button */
+  const [successMessage, setSuccessMessage] = useState(
+    <span className="ml-1"></span>
+  );
+
+  /* This is run when the "Add" button is pressed */
   const addMealToDatabase: SubmitHandler<Inputs> = async ({
-    meal_name,
+    mealName,
     season,
   }) => {
     /* Create a filler date */
-    const filler_date = DateTime.local(1900).startOf('day').toUTC().toString();
-    console.log(filler_date);
+    const fillerDate = DateTime.local(1900).startOf("day").toUTC().toString();
 
-    /* Add meal to the "meals" collection with a last_serving of null */
-    //let response = await Axios.post("/api/addMealToDatabase", {});
+    /* Add meal to the "meals" collection, only worry about the status */
+    let { status } = await Axios.post("/api/addMealToDatabase", {
+      mealName: mealName,
+      lastServing: fillerDate,
+      season: season,
+    });
+
+    /* When a response is received: */
+    if (status === 200) {
+      setSuccessMessage(<span className="ms-1">Added Successfully!</span>);
+
+      /* After two seconds, clear the message */
+      setTimeout(() => {
+        setSuccessMessage(<span className="ml-1"></span>);
+      }, 2000);
+    } else {
+      setSuccessMessage(<span className="ms-1">There was an error!</span>);
+
+      /* After two seconds, clear the message */
+      setTimeout(() => {
+        setSuccessMessage(<span className="ml-1"></span>);
+      }, 2000);
+    }
 
     /* Reset all fields */
     reset();
@@ -45,6 +67,7 @@ export const AddMealModal: FC = () => {
       data-bs-backdrop="static"
       data-bs-keyboard="false"
     >
+      {/* These two div tags are present in the documentation, so they are included here */}
       <div className="modal-dialog">
         <div className="modal-content">
           {/* Modal Header */}
@@ -59,7 +82,7 @@ export const AddMealModal: FC = () => {
               <div className="mb-3">
                 <label className="form-label">Meal Name</label>
                 <input
-                  {...register("meal_name", {
+                  {...register("mealName", {
                     required: true,
                     maxLength: 100,
                     minLength: 5,
@@ -67,7 +90,7 @@ export const AddMealModal: FC = () => {
                   })}
                   className="form-control"
                 />
-                {errors.meal_name && (
+                {errors.mealName && (
                   <span>** Please enter a valid meal **</span>
                 )}
               </div>
@@ -97,6 +120,9 @@ export const AddMealModal: FC = () => {
                 <button type="submit" className="btn btn-success">
                   Add
                 </button>
+
+                {/* Success Message */}
+                {successMessage}
               </div>
             </form>
           </div>
