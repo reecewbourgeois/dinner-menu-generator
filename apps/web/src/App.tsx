@@ -1,26 +1,19 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.scss';
+import Axios from 'axios';
 
-function App() {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <h1 className="header">
-                    Web
-                    <div className="Turborepo">Turborepo Example</div>
-                </h1>
-                <div>
-                    <a className="App-link" href="https://turbo.build/repo">
-                        Turborepo Docs Woop
-                    </a>
-                    <span> | </span>
-                    <a className="App-link" href="https://reactjs.org">
-                        React Docs
-                    </a>
-                </div>
-            </header>
-        </div>
-    );
-}
+const API_URL = process.env.NODE_ENV === 'production' ? 'SOME_URL' : 'http://localhost:5001/api';
 
-export default App;
+Axios.defaults.baseURL = API_URL;
+
+export const App = () => {
+  const fetchData = async () => {
+    const { data } = await Axios.get('/meals');
+
+    console.log(data);
+  };
+
+  fetchData();
+
+  return <div className={styles.app}></div>;
+};
