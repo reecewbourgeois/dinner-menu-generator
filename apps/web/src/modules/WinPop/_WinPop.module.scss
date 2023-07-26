@@ -1,0 +1,308 @@
+$borderRadius: 6px;
+$visibleBorderWidth: 5px;
+
+$invisibleCornerSize: 15px;
+$invisibleBorderSize: 10px;
+$halfInvisibleBorderSize: $invisibleBorderSize / 2;
+$invisibleBorderOffset: $invisibleCornerSize;
+$invisibleHorizontalBorderLength: calc(100% - $invisibleBorderOffset * 2);
+
+$headerHeight: calc(30px - $visibleBorderWidth);
+
+$buttonSize: 20px;
+$buttonGap: 5px;
+
+.root {
+  position: absolute;
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  min-width: calc($buttonSize * 3 + $buttonGap * 2 + $invisibleBorderSize * 2 + $visibleBorderWidth * 2);
+  min-height: calc($headerHeight + $invisibleBorderSize * 2 + $visibleBorderWidth * 2);
+
+  &.minimized {
+  }
+
+  &.bottomLeft {
+    bottom: 0;
+    left: 0;
+  }
+
+  &.bottomRight {
+    bottom: 0;
+    left: auto;
+    right: 0;
+  }
+
+  &.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.topLeft {
+    top: 0;
+    left: 0;
+  }
+
+  &.topRight {
+    top: 0;
+    left: auto;
+    right: 0;
+  }
+
+  .northWestCorner {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: $invisibleCornerSize;
+    height: $invisibleCornerSize;
+
+    cursor: nwse-resize;
+
+    .borderTop {
+      position: absolute;
+      top: auto;
+      bottom: $halfInvisibleBorderSize;
+      left: auto;
+      right: 0;
+
+      width: $halfInvisibleBorderSize;
+      height: $halfInvisibleBorderSize;
+    }
+
+    .borderLeft {
+      position: absolute;
+      top: auto;
+      bottom: 0;
+      left: auto;
+      right: $halfInvisibleBorderSize;
+
+      width: $halfInvisibleBorderSize;
+      height: $invisibleBorderSize;
+    }
+  }
+
+  .northBorder {
+    position: absolute;
+    top: 0;
+    left: $invisibleBorderOffset;
+
+    width: $invisibleHorizontalBorderLength;
+    height: $invisibleBorderSize;
+
+    cursor: ns-resize;
+
+    display: flex;
+    align-items: flex-end;
+
+    .border {
+      width: 100%;
+      height: $halfInvisibleBorderSize;
+    }
+  }
+
+  .northEastCorner {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: $invisibleCornerSize;
+    height: $invisibleCornerSize;
+
+    cursor: nesw-resize;
+
+    .borderTop {
+      position: absolute;
+      top: auto;
+      bottom: $halfInvisibleBorderSize;
+      left: 0;
+
+      width: $halfInvisibleBorderSize;
+      height: $halfInvisibleBorderSize;
+    }
+
+    .borderRight {
+      position: absolute;
+      top: auto;
+      bottom: 0;
+      left: $halfInvisibleBorderSize;
+
+      width: $halfInvisibleBorderSize;
+      height: $invisibleBorderSize;
+    }
+  }
+
+  .westBorder {
+    position: absolute;
+    top: $invisibleCornerSize;
+    left: 0;
+
+    width: $invisibleBorderSize;
+    height: $invisibleHorizontalBorderLength;
+
+    cursor: ew-resize;
+
+    display: flex;
+    justify-content: flex-end;
+
+    .border {
+      width: $halfInvisibleBorderSize;
+      height: 100%;
+    }
+  }
+
+  .center {
+    position: absolute;
+    top: $invisibleBorderSize;
+    left: $invisibleBorderSize;
+
+    width: calc(100% - $invisibleBorderSize * 2);
+    height: calc(100% - $invisibleBorderSize * 2);
+
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: $buttonGap;
+
+      height: $headerHeight;
+      line-height: $headerHeight;
+
+      padding: 0 $visibleBorderWidth $visibleBorderWidth $visibleBorderWidth;
+
+      .UTILITY_button {
+        display: flex;
+        align-items: center;
+
+        height: $buttonSize;
+        aspect-ratio: 1 / 1;
+
+        cursor: pointer;
+
+        opacity: 0.65;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      .closeButton {
+        @extend .UTILITY_button;
+      }
+    }
+
+    .content {
+      width: 100%;
+      height: calc(100% - #{$headerHeight});
+
+      &.minimized {
+        display: none;
+      }
+    }
+  }
+
+  .eastBorder {
+    position: absolute;
+    top: $invisibleCornerSize;
+    right: 0;
+
+    width: $invisibleBorderSize;
+    height: $invisibleHorizontalBorderLength;
+
+    cursor: ew-resize;
+
+    display: flex;
+    justify-content: flex-start;
+
+    .border {
+      width: $halfInvisibleBorderSize;
+      height: 100%;
+    }
+  }
+
+  .southWestCorner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: $invisibleCornerSize;
+    height: $invisibleCornerSize;
+
+    cursor: nesw-resize;
+
+    .borderBottom {
+      position: absolute;
+      top: $halfInvisibleBorderSize;
+      left: auto;
+      right: 0;
+
+      width: $halfInvisibleBorderSize;
+      height: $halfInvisibleBorderSize;
+    }
+
+    .borderLeft {
+      position: absolute;
+      top: 0;
+      left: auto;
+      right: $halfInvisibleBorderSize;
+
+      width: $halfInvisibleBorderSize;
+      height: $invisibleBorderSize;
+    }
+  }
+
+  .southBorder {
+    position: absolute;
+    bottom: 0;
+    left: $invisibleBorderOffset;
+
+    width: $invisibleHorizontalBorderLength;
+    height: $invisibleBorderSize;
+
+    cursor: ns-resize;
+
+    display: flex;
+    align-items: flex-start;
+
+    .border {
+      width: 100%;
+      height: $halfInvisibleBorderSize;
+    }
+  }
+
+  .southEastCorner {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    width: $invisibleCornerSize;
+    height: $invisibleCornerSize;
+
+    cursor: nwse-resize;
+
+    .borderBottom {
+      position: absolute;
+      top: $halfInvisibleBorderSize;
+      left: 0;
+
+      width: $halfInvisibleBorderSize;
+      height: $halfInvisibleBorderSize;
+    }
+
+    .borderRight {
+      position: absolute;
+      top: 0;
+      left: $halfInvisibleBorderSize;
+
+      width: $halfInvisibleBorderSize;
+      height: $invisibleBorderSize;
+    }
+  }
+}
