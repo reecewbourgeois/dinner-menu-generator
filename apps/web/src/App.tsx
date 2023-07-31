@@ -30,14 +30,7 @@ export const App = () => {
     <div className={styles.app}>
       <button onClick={openDialog}>Sup</button>
 
-      <WinPop
-        open={open}
-        onClose={closeDialog}
-        startingSize={{
-          height: '500px',
-          width: '500px',
-        }}
-      />
+      <WinPop open={open} onClose={closeDialog} />
     </div>
   );
 };

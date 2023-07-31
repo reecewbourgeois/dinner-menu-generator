@@ -1,5 +1,5 @@
 $borderRadius: 6px;
-$visibleBorderWidth: 5px;
+$borderWidth: 5px;
 
 $invisibleCornerSize: 15px;
 $invisibleBorderSize: 10px;
@@ -7,54 +7,46 @@ $halfInvisibleBorderSize: $invisibleBorderSize / 2;
 $invisibleBorderOffset: $invisibleCornerSize;
 $invisibleHorizontalBorderLength: calc(100% - $invisibleBorderOffset * 2);
 
-$headerHeight: calc(30px - $visibleBorderWidth);
+$headerHeight: 30px;
 
 $buttonSize: 20px;
 $buttonGap: 5px;
 
 .root {
   position: absolute;
+  top: 0;
+  left: 0;
 
   margin: 0;
   padding: 0;
   border: 0;
 
-  min-width: calc($buttonSize * 3 + $buttonGap * 2 + $invisibleBorderSize * 2 + $visibleBorderWidth * 2);
-  min-height: calc($headerHeight + $invisibleBorderSize * 2 + $visibleBorderWidth * 2);
+  min-width: calc($buttonSize * 3 + $buttonGap * 2 + $invisibleBorderSize * 2 + $borderWidth * 2);
+  min-height: calc($headerHeight + $invisibleBorderSize * 2 + $borderWidth * 2);
+
+  transition: all 0.2s ease-in-out;
 
   &.minimized {
+    min-height: calc($headerHeight + $borderWidth * 3);
   }
 
-  &.bottomLeft {
-    bottom: 0;
-    left: 0;
-  }
+  .UTILITY_draggable_border {
+    position: absolute;
 
-  &.bottomRight {
-    bottom: 0;
-    left: auto;
-    right: 0;
-  }
+    z-index: 1;
 
-  &.center {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+    &.minimized {
+      display: none;
+    }
 
-  &.topLeft {
-    top: 0;
-    left: 0;
-  }
-
-  &.topRight {
-    top: 0;
-    left: auto;
-    right: 0;
+    &.maximized {
+      display: none;
+    }
   }
 
   .northWestCorner {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     top: 0;
     left: 0;
 
@@ -62,32 +54,11 @@ $buttonGap: 5px;
     height: $invisibleCornerSize;
 
     cursor: nwse-resize;
-
-    .borderTop {
-      position: absolute;
-      top: auto;
-      bottom: $halfInvisibleBorderSize;
-      left: auto;
-      right: 0;
-
-      width: $halfInvisibleBorderSize;
-      height: $halfInvisibleBorderSize;
-    }
-
-    .borderLeft {
-      position: absolute;
-      top: auto;
-      bottom: 0;
-      left: auto;
-      right: $halfInvisibleBorderSize;
-
-      width: $halfInvisibleBorderSize;
-      height: $invisibleBorderSize;
-    }
   }
 
   .northBorder {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     top: 0;
     left: $invisibleBorderOffset;
 
@@ -95,18 +66,11 @@ $buttonGap: 5px;
     height: $invisibleBorderSize;
 
     cursor: ns-resize;
-
-    display: flex;
-    align-items: flex-end;
-
-    .border {
-      width: 100%;
-      height: $halfInvisibleBorderSize;
-    }
   }
 
   .northEastCorner {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     top: 0;
     right: 0;
 
@@ -114,30 +78,11 @@ $buttonGap: 5px;
     height: $invisibleCornerSize;
 
     cursor: nesw-resize;
-
-    .borderTop {
-      position: absolute;
-      top: auto;
-      bottom: $halfInvisibleBorderSize;
-      left: 0;
-
-      width: $halfInvisibleBorderSize;
-      height: $halfInvisibleBorderSize;
-    }
-
-    .borderRight {
-      position: absolute;
-      top: auto;
-      bottom: 0;
-      left: $halfInvisibleBorderSize;
-
-      width: $halfInvisibleBorderSize;
-      height: $invisibleBorderSize;
-    }
   }
 
   .westBorder {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     top: $invisibleCornerSize;
     left: 0;
 
@@ -145,26 +90,45 @@ $buttonGap: 5px;
     height: $invisibleHorizontalBorderLength;
 
     cursor: ew-resize;
-
-    display: flex;
-    justify-content: flex-end;
-
-    .border {
-      width: $halfInvisibleBorderSize;
-      height: 100%;
-    }
   }
 
   .center {
     position: absolute;
-    top: $invisibleBorderSize;
-    left: $invisibleBorderSize;
+    top: $halfInvisibleBorderSize;
+    left: $halfInvisibleBorderSize;
 
     width: calc(100% - $invisibleBorderSize * 2);
     height: calc(100% - $invisibleBorderSize * 2);
 
+    border: $borderWidth solid;
+    border-radius: $borderRadius;
+
+    z-index: 0;
+
     display: flex;
     flex-direction: column;
+
+    &.minimized {
+      left: 0;
+
+      width: calc(100% - 2 * $borderWidth);
+      height: $headerHeight;
+
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      cursor: pointer;
+    }
+
+    &.maximized {
+      top: 0;
+      left: 0;
+
+      width: calc(100% - 2 * $borderWidth);
+      height: calc(100% - 2 * $borderWidth);
+
+      border-radius: 0;
+    }
 
     .header {
       display: flex;
@@ -175,7 +139,19 @@ $buttonGap: 5px;
       height: $headerHeight;
       line-height: $headerHeight;
 
-      padding: 0 $visibleBorderWidth $visibleBorderWidth $visibleBorderWidth;
+      padding: 0 $borderWidth $borderWidth $borderWidth;
+
+      cursor: move;
+
+      &.minimized {
+        padding: 0 $borderWidth 0 $borderWidth;
+
+        cursor: pointer;
+      }
+
+      &.maximized {
+        cursor: default;
+      }
 
       .UTILITY_button {
         display: flex;
@@ -202,6 +178,8 @@ $buttonGap: 5px;
       width: 100%;
       height: calc(100% - #{$headerHeight});
 
+      background-color: pink;
+
       &.minimized {
         display: none;
       }
@@ -209,7 +187,8 @@ $buttonGap: 5px;
   }
 
   .eastBorder {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     top: $invisibleCornerSize;
     right: 0;
 
@@ -217,18 +196,11 @@ $buttonGap: 5px;
     height: $invisibleHorizontalBorderLength;
 
     cursor: ew-resize;
-
-    display: flex;
-    justify-content: flex-start;
-
-    .border {
-      width: $halfInvisibleBorderSize;
-      height: 100%;
-    }
   }
 
   .southWestCorner {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     bottom: 0;
     left: 0;
 
@@ -236,30 +208,11 @@ $buttonGap: 5px;
     height: $invisibleCornerSize;
 
     cursor: nesw-resize;
-
-    .borderBottom {
-      position: absolute;
-      top: $halfInvisibleBorderSize;
-      left: auto;
-      right: 0;
-
-      width: $halfInvisibleBorderSize;
-      height: $halfInvisibleBorderSize;
-    }
-
-    .borderLeft {
-      position: absolute;
-      top: 0;
-      left: auto;
-      right: $halfInvisibleBorderSize;
-
-      width: $halfInvisibleBorderSize;
-      height: $invisibleBorderSize;
-    }
   }
 
   .southBorder {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     bottom: 0;
     left: $invisibleBorderOffset;
 
@@ -267,18 +220,11 @@ $buttonGap: 5px;
     height: $invisibleBorderSize;
 
     cursor: ns-resize;
-
-    display: flex;
-    align-items: flex-start;
-
-    .border {
-      width: 100%;
-      height: $halfInvisibleBorderSize;
-    }
   }
 
   .southEastCorner {
-    position: absolute;
+    @extend .UTILITY_draggable_border;
+
     bottom: 0;
     right: 0;
 
@@ -286,23 +232,5 @@ $buttonGap: 5px;
     height: $invisibleCornerSize;
 
     cursor: nwse-resize;
-
-    .borderBottom {
-      position: absolute;
-      top: $halfInvisibleBorderSize;
-      left: 0;
-
-      width: $halfInvisibleBorderSize;
-      height: $halfInvisibleBorderSize;
-    }
-
-    .borderRight {
-      position: absolute;
-      top: 0;
-      left: $halfInvisibleBorderSize;
-
-      width: $halfInvisibleBorderSize;
-      height: $invisibleBorderSize;
-    }
   }
 }
